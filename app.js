@@ -22,7 +22,6 @@ const server = http.createServer((req, res) => {
           message:'no value stored'
         }))
       }
-      console.log(parseData.myNumber)
       return res.end(JSON.stringify(parseData));
     }
     // POST METHOD
@@ -58,9 +57,9 @@ const server = http.createServer((req, res) => {
           const data = JSON.stringify(body);
           fs.writeFileSync("./data/number.json", data);
           res.statusCode = 201;
-          res.end(
+          return res.end(
             JSON.stringify({
-              message: "my number succesfully crated",
+              message: "my number succesfully created",
             })
           );
         });
@@ -83,7 +82,7 @@ const server = http.createServer((req, res) => {
           return res.end(
             JSON.stringify({
               message: "value must be numeric type",
-            })
+            }) 
           );
         }
 
@@ -91,7 +90,7 @@ const server = http.createServer((req, res) => {
         fs.writeFileSync("./data/number.json", data);
         //TODO no estoy muy seguro si usar el codigo 202 aqui
         res.statusCode = 200;
-        res.end(
+        return res.end(
           JSON.stringify({
             message: "number updated succesfully!!!",
             number: body,
@@ -110,7 +109,7 @@ const server = http.createServer((req, res) => {
       if (method === "GET") {
         if(Object.keys(parseData).length === 0){
           res.statusCode = 404;
-          res.end(JSON.stringify({
+          return res.end(JSON.stringify({
             message:'no value stored'
           }))
         }
@@ -138,7 +137,7 @@ const server = http.createServer((req, res) => {
       if (method === "DELETE") {
         fs.writeFileSync("./data/number.json", JSON.stringify({}));
         res.statusCode = 200;
-        res.end(
+        return res.end(
           JSON.stringify({
             message: "myNumber deleted succesfully",
           })
